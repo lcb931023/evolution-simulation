@@ -6,14 +6,15 @@ Once they have enough energy to reproduce, they do that
 
 const STARTING_ENERGY = 10;
 const ENERGY_TO_MOVE = 0.5;
-const ENERGY_FROM_FOOD = 5;
+const ENERGY_FROM_FOOD = 2;
 
 const MUTATION_RATE = 0.2;
 const MUTATE_MAX = 0.3;
+const SPEED_MIN = 0.1;
 
 class Creature {
   constructor(speed) {
-    this.speed = speed;
+    this.speed = speed < SPEED_MIN ? SPEED_MIN : speed;
     this.distTravelled = 0;
     this.energy = STARTING_ENERGY
   }
@@ -43,7 +44,7 @@ class Creature {
     if (mutating) {
       const mutateAmt = (Math.random() * MUTATE_MAX) * (Math.sign(Math.random()-0.5))
       childSpeed = this.speed + mutateAmt
-      if (childSpeed <= 0) childSpeed = 0
+      if (childSpeed <= SPEED_MIN) childSpeed = SPEED_MIN
     } else childSpeed = this.speed
     return new Creature(childSpeed)
   }
